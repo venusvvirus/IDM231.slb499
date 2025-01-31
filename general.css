@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('images/landingbg.png');
+    background-size: cover;
+    background-position: center;
+    font-family: 'Palatino', serif;
+}
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
+.quiz-card {
+    background-color: rgba(22, 28, 21, 0.85);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2rem;
+}
+
+h1 {
+    color: #E6D5B8;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    font-weight: normal;
+}
+
+.subtitle {
+    color: #B8A88A;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.date-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+select {
+    background-color: transparent;
+    border: 1px solid #B8A88A;
+    color: #B8A88A;
+    padding: 0.5rem 2rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.fairy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.fairy-card {
+    aspect-ratio: 1;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+}
+
+.fairy-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  
+    display: block;     
+}
+
+.fairy-card:hover {
+    transform:scale(1.05);
+}
+
+.help-button {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(22, 28, 21, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #B8A88A;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
