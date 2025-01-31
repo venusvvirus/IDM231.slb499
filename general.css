@@ -118,6 +118,7 @@ select {
     margin-top: 1.5rem;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Palatino', serif;
 }
 
 .discover-button:hover {
