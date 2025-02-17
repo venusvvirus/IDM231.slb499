@@ -1,22 +1,36 @@
-//
-// My first JS code below
-//
+function showModal(title, description, imagePath) {
+    const modal = document.getElementById('fairyModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDescription = document.getElementById('modalDescription');
+    const modalImage = document.getElementById('modalImage');
 
-console.log('Hello World!');
-let fname = 'Saffron';
-let age = 20;
-const pie = 3.1415926; 
-//
-console.log('Well, well, well ' + fname + ' is ' + age + ' years old');
+    modalTitle.textContent = title;
+    modalDescription.textContent = description;
+    modalImage.src = `images/aprilf.png`;
+    modalImage.src = `images/augf.png`;
+    
+    // Add fade-in effect
+    modal.style.display = 'flex';
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.opacity = '1';
+        modal.style.transition = 'opacity 0.3s ease';
+    }, 10);
+}
 
-let greeting = `Hello ${fname},
+// Close modal function with fade-out effect
+function closeModal() {
+    const modal = document.getElementById('fairyModal');
+    modal.style.opacity = '0';
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 300);
+}
 
-you are ${age} years old`;
-console.log(greeting);
-
-const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-console.log('Array value is: ' + daysOfWeek);
-console.log('Day of rest is: ' + daysOfWeek[6]);
-
-let tDate = new Date();
-console.log('Today\'s date object is: ' + tDate);
+// Event listeners for closing the modal
+document.querySelector('.close-button').addEventListener('click', closeModal);
+document.getElementById('fairyModal').addEventListener('click', (event) => {
+    if (event.target === document.getElementById('fairyModal')) {
+        closeModal();
+    }
+});
