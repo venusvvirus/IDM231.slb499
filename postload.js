@@ -39,7 +39,7 @@ document.querySelectorAll('.fairy-card').forEach(card => {
             'Elf': 'audio/sound12.mp3'
         };
         
-        const soundPath = soundPaths[fairyType]; // Get the corresponding sound
+        const soundPath = soundPaths[fairyType]; 
         showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath);
     });
 });
