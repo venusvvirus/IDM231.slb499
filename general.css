@@ -5,7 +5,9 @@
 }
 
 body {
-    min-height: 80vh;
+   
+    max-width: 1280px;
+    max-height: 960px; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -275,4 +277,26 @@ h1 {
         text-align: center;
         font-size: 1.1rem;
     }
+}
+/* Style for the image sourcing text at the bottom */
+.image-source {
+    position: fixed;
+    bottom: 10px; /* Adjust distance from the bottom */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px; /* Adjust font size */
+    color: #B8A88A; /* Adjust text color */
+    text-align: center;
+    z-index: 1000; /* Ensure it's above other content */
+    background-color: rgba(0, 0, 0, 0.5); /* Optional: adds a background for better visibility */
+    padding: 5px;
+}
+
+.image-source a {
+    color: #fff; /* Style the link text */
+    text-decoration: none; /* Remove underline */
+}
+
+.image-source a:hover {
+    text-decoration: underline; /* Optional: underline on hover */
 }
