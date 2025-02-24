@@ -10,6 +10,7 @@ const fairyDescriptions = {
     'Gnome': 'Gnomes inhabit the tree roots within forests or high lands. They mature quickly, typically appearing old and wearing pointed hats. They enjoy fruit, eggs, vegetables, and mushrooms, They use earth magic to heal and protect animals.',
     'Unseelie': 'The unseelie court is the darker counterpart of the seelie court. They tend to be the most active during autumn and winter. They are known to use black magic and make deals with humans that never end well for the human.',
     'Salamander': 'Taking the form of fiery lizards, salamanders are powerful creatures known as a fire elemental. They normally appear in red and orange tones and can take the identity of a fire fairy or ball of fire. They embody the spirit of fire, aiding humans and witches in the areas of revenge and passion, as well as the manifestation of fire.',
+    'Dryad' : 'Dryads are tree nymphs, spending most of their time hidden in trees. They can make plants grow quickly and change seeds into large trees.',
     'Elf': 'Elves are said to have pointed ears and mesmerizing eyes. They are typically a carer and protector for a specific forest. They are smart and agile creatures, with keener perceptions than humans.'
 };
 
@@ -22,8 +23,24 @@ document.querySelector('.help-button').addEventListener('click', () => {
 document.querySelectorAll('.fairy-card').forEach(card => {
     card.addEventListener('click', () => {
         const fairyType = card.getAttribute('data-fairy');
-        const imagePath = card.querySelector('img').src; // Get the correct image source
-        showModal(fairyType, fairyDescriptions[fairyType], imagePath);
+        const imagePath = card.querySelector('img').src; 
+        const soundPaths = {
+            'Nymph': 'audio/sound1.mp3',
+            'Deva': 'audio/sound2.mp3',
+            'Will o\' Wisp': 'audio/sound3.mp3',
+            'Changeling': 'audio/sound4.mp3',
+            'Banshee': 'audio/sound5.mp3',
+            'Pixie': 'audio/sound6.mp3',
+            'Seelie': 'audio/sound7.mp3',
+            'Gnome': 'audio/sound8.mp3',
+            'Dryad': 'audio/sound9.mp3',
+            'Unseelie': 'audio/sound10.mp3',
+            'Salamander': 'audio/sound11.mp3',
+            'Elf': 'audio/sound12.mp3'
+        };
+        
+        const soundPath = soundPaths[fairyType]; // Get the corresponding sound
+        showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath);
     });
 });
 
@@ -34,7 +51,8 @@ document.querySelector('.discover-button').addEventListener('click', () => {
     if (isValidDate(month, day)) {
         const fairyType = getFairyType(month);
         const imagePath = document.querySelector(`.fairy-card[data-fairy="${fairyType}"] img`).src;
-        showModal('Your Fairy Type', fairyDescriptions[fairyType], imagePath);
+        const soundPath = soundPaths[fairyType];
+        showModal('Your Fairy Type', fairyDescriptions[fairyType], imagePath, soundPath);
     } else {
         showModal('Error', 'Please enter a valid date.');
     }
@@ -55,8 +73,8 @@ function isValidDate(month, day) {
     if (day < 1 || day > 31) return false;
     return true;
 }
-
-function showModal(title, description, imagePath) {
+let currentAudio = null;
+function showModal(title, description, imagePath, soundPath = '') {
     const modal = document.getElementById('fairyModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
@@ -64,7 +82,17 @@ function showModal(title, description, imagePath) {
 
     modalTitle.textContent = title;
     modalDescription.textContent = description;
-    modalImage.src = imagePath; // Dynamically set the correct image
+    modalImage.src = imagePath; 
+  
+     if (currentAudio) {
+            currentAudio.pause();
+            currentAudio.currentTime = 0;
+        }
+     if (soundPath) {
+            currentAudio = new Audio(soundPath);
+            currentAudio.play();
+        }
+    
 
     // Add fade-in effect
     modal.style.display = 'flex';
@@ -90,6 +118,21 @@ window.addEventListener('click', (event) => {
 // Close modal function with fade-out effect
 function closeModal() {
     const modal = document.getElementById('fairyModal');
+
+    // Stop the audio if it's playing
+    if (currentAudio) {
+        let fadeOut = setInterval( () => {
+            if (currentAudio.volume > 0.1) {
+                currentAudio.volume -= 0.1;
+        } else {
+            clearInterval(fadeOut);
+        currentAudio.pause();
+        currentAudio.currentTime = 0; // Reset to the beginning
+        currentAudio = null; // Clear the reference
+    }
+}, 50);
+    }
+
     modal.style.opacity = '0';
     setTimeout(() => {
         modal.style.display = 'none';
