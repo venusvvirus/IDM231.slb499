@@ -13,7 +13,6 @@ const fairyDescriptions = {
     'Elf': 'Elves are said to have pointed ears and mesmerizing eyes. They are typically a carer and protector for a specific forest. They are smart and agile creatures, with keener perceptions than humans.'
 };
 
-// Define sound paths globally so they can be used everywhere
 const soundPaths = {
     'Nymph': 'audio/sound1.mp3',
     'Deva': 'audio/sound2.mp3',
@@ -126,7 +125,7 @@ function showModal(title, description, imagePath, soundPath = '') {
 function closeModal() {
     const modal = document.getElementById('fairyModal');
 
-    // Stop the audio if it's playing
+    
     if (currentAudio) {
         let fadeOut = setInterval( () => {
             if (currentAudio.volume > 0.1) {
@@ -134,8 +133,8 @@ function closeModal() {
         } else {
             clearInterval(fadeOut);
         currentAudio.pause();
-        currentAudio.currentTime = 0; // Reset to the beginning
-        currentAudio = null; // Clear the reference
+        currentAudio.currentTime = 0; 
+        currentAudio = null; 
     }
 }, 50);
     }
