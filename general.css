@@ -5,8 +5,7 @@
 }
 
 body {
-    max-width: 1280px;
-    max-height: 960px; 
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -14,12 +13,17 @@ body {
     background-size: cover;
     background-position: center;
     font-family: 'Palatino', serif;
+    overflow: hidden;
 }
 
 .container {
-    width: 90%;
+    width: 100%;
     max-width: 1200px;
-    padding: 2rem;
+    padding: 0.5rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
 .quiz-card {
@@ -45,11 +49,32 @@ h1 {
     margin-bottom: 2rem;
 }
 
-.date-inputs {
+
+.date-container {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
     margin-top: 1rem;
+}
+
+#birthday-picker {
+    background-color: transparent;
+    border: 2px solid #B8A88A;
+    color: #E6D5B8;
+    padding: 0.8rem 1.5rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    width: 220px;
+    text-align: center;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    font-family: 'Palatino', serif;
+}
+
+#birthday-picker:focus {
+    outline: none;
+    border-color: #E6D5B8;
+    box-shadow: 0 0 8px rgba(230, 213, 184, 0.5);
 }
 
 .fairy-grid {
@@ -76,9 +101,38 @@ h1 {
     object-fit: cover;
     display: block;
 }
+.fairy-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(22, 28, 21, 0.85);
+    color: #E6D5B8;
+    padding: 0.8rem;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+}
+
+.fairy-name {
+    font-weight: bold;
+    margin-bottom: 0.2rem;
+}
+
+.fairy-dates {
+    font-size: 0.8rem;
+    color: #B8A88A;
+}
 
 .fairy-card:hover {
     transform: scale(1.05);
+}
+
+.fairy-card:hover .fairy-info {
+    transform: translateY(0);
+}
+
+.fairy-card:hover img {
+    transform: scale(1.1);
 }
 
 .help-button {
@@ -117,24 +171,6 @@ h1 {
     background-color: #DAD0BB;
     transform: translateY(-2px);
     box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-}
-
-.date-inputs input {
-    background-color: transparent;
-    border: 2px solid #B8A88A;
-    color: #B8A88A;
-    padding: 0.6rem 1.8rem;
-    border-radius: 20px;
-    font-size: 1rem;
-    width: 100px;
-    text-align: center;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.date-inputs input:focus {
-    outline: none;
-    border-color: #E6D5B8;
-    box-shadow: 0 0 8px rgba(230, 213, 184, 0.5);
 }
 
 .modal {
@@ -200,6 +236,13 @@ h1 {
     font-family: 'Palatino', serif;
 }
 
+#modalDateRange {
+    color: #566573;
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
 #modalDescription {
     color: #34495E;
     font-size: 1.2rem;
@@ -230,7 +273,6 @@ h1 {
     transform: rotate(90deg);
 }
 
-/* Decorative elements */
 .modal-butterfly {
     position: absolute;
     width: 30px;
@@ -255,27 +297,6 @@ h1 {
     50% { transform: translateY(-20px) rotate(-5deg); }
 }
 
-@media (max-width: 768px) {
-    .modal-content {
-        flex-direction: column;
-        align-items: center;
-        padding: 2rem;
-    }
-
-    .modal-image-container {
-        max-width: 200px;
-    }
-
-    #modalTitle {
-        text-align: center;
-        font-size: 2rem;
-    }
-
-    #modalDescription {
-        text-align: center;
-        font-size: 1.1rem;
-    }
-}
 
 .image-source {
     position: fixed;
@@ -297,4 +318,93 @@ h1 {
 
 .image-source a:hover {
     text-decoration: underline; 
+}
+
+.flatpickr-calendar {
+    background-color: rgba(22, 28, 21, 0.95) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 15px !important;
+    font-family: 'Palatino', serif !important;
+}
+
+.flatpickr-day {
+    color: #E6D5B8 !important;
+}
+
+.flatpickr-day.selected {
+    background: #B8A88A !important;
+    border-color: #B8A88A !important;
+    color: #161C15 !important;
+}
+
+.flatpickr-day:hover {
+    background: rgba(184, 168, 138, 0.3) !important;
+}
+
+.flatpickr-months .flatpickr-month,
+.flatpickr-current-month,
+.flatpickr-monthDropdown-months,
+.flatpickr-weekdays,
+.flatpickr-weekday {
+    color: #E6D5B8 !important;
+    fill: #E6D5B8 !important;
+}
+
+.flatpickr-day.flatpickr-disabled,
+.flatpickr-day.flatpickr-disabled:hover,
+.flatpickr-day.prevMonthDay,
+.flatpickr-day.nextMonthDay,
+.flatpickr-day.notAllowed {
+    color: rgba(184, 168, 138, 0.5) !important;
+}
+
+@media (max-width: 992px) {
+    .fairy-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .fairy-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+    
+    .modal-content {
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+    }
+
+    .modal-image-container {
+        max-width: 200px;
+    }
+
+    #modalTitle {
+        text-align: center;
+        font-size: 2rem;
+    }
+    
+    #modalDateRange {
+        text-align: center;
+    }
+
+    #modalDescription {
+        text-align: center;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .fairy-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .quiz-card {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
 }

@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content ="width=device-width", initial-scale="1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What Kind of Fairy Are You?</title>
     <link rel="stylesheet" href="general.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.css">
     <script src="preload.js"></script>
-</head>
-</style>
 </head>
 <body>
     <button class="help-button">?</button>
@@ -15,53 +14,99 @@
         <div class="quiz-card">
             <h1>What kind of fairy are you?</h1>
             <div class="subtitle">Enter your birthday and find out:</div>
-            <div class="date-inputs">
-                <input type="number" id="month" placeholder="MM" min="1" max="12" maxlength="2">
-                <input type="number" id="day" placeholder="DD" min="1" max="31" maxlength="2">
-                <input type="number" id="year" placeholder="YY" min="0" max="99" maxlength="2">
+            <div class="date-container">
+                <input type="text" id="birthday-picker" placeholder="Select your birthday">
+                <button class="discover-button">Discover Your Fairy Roots</button>
             </div>
-            <button class="discover-button">Discover Your Fairy Roots</button>
         </div>
         <div class="fairy-grid">
-            <div class="fairy-card" data-fairy="Nymph">
-                <img src="images/aprilf.png" alt="Nymph">
-            </div>
-            <div class="fairy-card" data-fairy="Deva">
-                <img src="images/augf.png" alt="Deva">
-            </div>
-            <div class="fairy-card" data-fairy="Will o' Wisp">
-                <img src="images/decf.png" alt="Will o' Wisp">
+            <div class="fairy-card" data-fairy="Banshee">
+                <img src="images/janf.jpeg" alt="Banshee">
+                <div class="fairy-info">
+                    <div class="fairy-name">Banshee</div>
+                    <div class="fairy-dates">January 1 - January 31</div>
+                </div>
             </div>
             <div class="fairy-card" data-fairy="Changeling">
                 <img src="images/febf.png" alt="Changeling">
-            </div>
-            <div class="fairy-card" data-fairy="Banshee">
-                <img src="images/janf.jpeg" alt="Banshee">
-            </div>
-            <div class="fairy-card" data-fairy="Pixie">
-                <img src="images/julyf.png" alt="Pixie">
-            </div>
-            <div class="fairy-card" data-fairy="Seelie">
-                <img src="images/junf.png" alt="Seelie Court">
+                <div class="fairy-info">
+                    <div class="fairy-name">Changeling</div>
+                    <div class="fairy-dates">February 1 - February 29</div>
+                </div>
             </div>
             <div class="fairy-card" data-fairy="Gnome">
                 <img src="images/marchf.png" alt="Gnome">
+                <div class="fairy-info">
+                    <div class="fairy-name">Gnome</div>
+                    <div class="fairy-dates">March 1 - March 31</div>
+                </div>
+            </div>
+            <div class="fairy-card" data-fairy="Nymph">
+                <img src="images/aprilf.png" alt="Nymph">
+                <div class="fairy-info">
+                    <div class="fairy-name">Nymph</div>
+                    <div class="fairy-dates">April 1 - April 30</div>
+                </div>
             </div>
             <div class="fairy-card" data-fairy="Dryad">
                 <img src="images/mayf.png" alt="Dryad">
+                <div class="fairy-info">
+                    <div class="fairy-name">Dryad</div>
+                    <div class="fairy-dates">May 1 - May 31</div>
+                </div>
             </div>
-            <div class="fairy-card" data-fairy="Unseelie">
-                <img src="images/novf.png" alt="Unseelie Court">
+            <div class="fairy-card" data-fairy="Seelie">
+                <img src="images/junf.png" alt="Seelie Court">
+                <div class="fairy-info">
+                    <div class="fairy-name">Seelie</div>
+                    <div class="fairy-dates">June 1 - June 30</div>
+                </div>
             </div>
-            <div class="fairy-card" data-fairy="Salamander">
-                <img src="images/octf.png" alt="Salamander">
+            <div class="fairy-card" data-fairy="Pixie">
+                <img src="images/julyf.png" alt="Pixie">
+                <div class="fairy-info">
+                    <div class="fairy-name">Pixie</div>
+                    <div class="fairy-dates">July 1 - July 31</div>
+                </div>
+            </div>
+            <div class="fairy-card" data-fairy="Deva">
+                <img src="images/augf.png" alt="Deva">
+                <div class="fairy-info">
+                    <div class="fairy-name">Deva</div>
+                    <div class="fairy-dates">August 1 - August 31</div>
+                </div>
             </div>
             <div class="fairy-card" data-fairy="Elf">
                 <img src="images/sepf.png" alt="Elf">
+                <div class="fairy-info">
+                    <div class="fairy-name">Elf</div>
+                    <div class="fairy-dates">September 1 - September 30</div>
+                </div>
+            </div>
+            <div class="fairy-card" data-fairy="Salamander">
+                <img src="images/octf.png" alt="Salamander">
+                <div class="fairy-info">
+                    <div class="fairy-name">Salamander</div>
+                    <div class="fairy-dates">October 1 - October 31</div>
+                </div>
+            </div>
+            <div class="fairy-card" data-fairy="Unseelie">
+                <img src="images/novf.png" alt="Unseelie Court">
+                <div class="fairy-info">
+                    <div class="fairy-name">Unseelie</div>
+                    <div class="fairy-dates">November 1 - November 30</div>
+                </div>
+            </div>
+            <div class="fairy-card" data-fairy="Will o' Wisp">
+                <img src="images/decf.png" alt="Will o' Wisp">
+                <div class="fairy-info">
+                    <div class="fairy-name">Will o' Wisp</div>
+                    <div class="fairy-dates">December 1 - December 31</div>
+                </div>
             </div>
         </div>
     </div>
-
+     
     <div class="modal" id="fairyModal">
         <div class="modal-content">
             <button class="close-button">&times;</button>
@@ -72,16 +117,19 @@
             </div>
             <div class="modal-text">
                 <h2 id="modalTitle"></h2>
+                <p id="modalDateRange"></p>
                 <p id="modalDescription"></p>
             </div>
             <img src="images/butterfly2.png" alt="butterfly" class="modal-butterfly butterfly-1">
             <img src="images/butterfly.png" alt="butterfly" class="modal-butterfly butterfly-2">
         </div>
     </div>
+    
     <div class="image-source">
         Image Sourcing: <a href="https://www.pinterest.com" target="_blank">www.pinterest.com</a>
     </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.13/flatpickr.min.js"></script>
     <script src="postload.js"></script>
-   
 </body>
 </html>

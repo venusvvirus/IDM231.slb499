@@ -13,6 +13,21 @@ const fairyDescriptions = {
     'Elf': 'Elves are said to have pointed ears and mesmerizing eyes. They are typically a carer and protector for a specific forest. They are smart and agile creatures, with keener perceptions than humans.'
 };
 
+const fairyDateRanges = {
+    'Banshee': 'January 1 - January 31',
+    'Changeling': 'February 1 - February 29',
+    'Gnome': 'March 1 - March 31',
+    'Nymph': 'April 1 - April 30',
+    'Dryad': 'May 1 - May 31',
+    'Seelie': 'June 1 - June 30',
+    'Pixie': 'July 1 - July 31',
+    'Deva': 'August 1 - August 31',
+    'Elf': 'September 1 - September 30',
+    'Salamander': 'October 1 - October 31',
+    'Unseelie': 'November 1 - November 30',
+    'Will o\' Wisp': 'December 1 - December 31'
+}
+
 const soundPaths = {
     'Nymph': 'audio/sound1.mp3',
     'Deva': 'audio/sound2.mp3',
@@ -28,48 +43,81 @@ const soundPaths = {
     'Elf': 'audio/sound12.mp3'
 };
 
-const helpText = 'Welcome to the Fairy Zodiac! Enter your birthday to discover which type of fairy you are. Each fairy type has unique characteristics and abilities based on their connection to nature and the elements. Click on any fairy card to learn more about that particular type of fairy.';
-
-document.querySelector('.help-button').addEventListener('click', () => {
-    showModal('How to Use', helpText, 'images/helpf.jpeg');
-});
-
-document.querySelectorAll('.fairy-card').forEach(card => {
-    card.addEventListener('click', () => {
-        const fairyType = card.getAttribute('data-fairy');
-        const imagePath = card.querySelector('img').src; 
-        const soundPath = soundPaths[fairyType]; 
-
-        showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath);
+document.addEventListener('DOMContentLoaded', function() {
+    const birthdayPicker = flatpickr("#birthday-picker", {
+        dateFormat: "F j, Y", 
+        altInput: true,
+        altFormat: "F j, Y", 
+        disableMobile: false,
+        placeholder: "Select Birthday", 
+        defaultDate: null, 
+        onChange: function(selectedDates, dateStr) {
+            console.log("Selected date:", dateStr);
+        }
     });
-});
+    
+    const helpText = 'Welcome to the Fairy Zodiac! Select your birthday using the calendar to discover which type of fairy you are. Each fairy type has unique characteristics and abilities based on their connection to nature and the elements. Hover over or click on any fairy card to learn more about that particular type of fairy.';
+    
+    document.querySelector('.help-button').addEventListener('click', () => {
+        showModal('How to Use', helpText, 'images/helpf.jpeg'); 
+    });
 
-document.querySelector('.discover-button').addEventListener('click', () => {
-    const month = parseInt(document.getElementById('month').value);
-    const day = parseInt(document.getElementById('day').value);
+    document.querySelectorAll('.fairy-card').forEach(card => {
+        card.addEventListener('click', () => {
+            const fairyType = card.getAttribute('data-fairy');
+            const imagePath = card.querySelector('img').src; 
+            const soundPath = soundPaths[fairyType];
+            const dateRange = fairyDateRanges[fairyType]; 
 
-    if (isValidDate(month, day)) {
+            showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath, dateRange);
+        });
+    });
+    
+    document.querySelector('.discover-button').addEventListener('click', () => {
+        const selectedDate = birthdayPicker.selectedDates[0];
+        
+        if (!selectedDate) {
+            showModal('Error', 'Please select your birthday first.', 'images/help.jpeg');
+            return;
+        }
+        
+        const year = selectedDate.getFullYear();
+        const currentYear = new Date().getFullYear();
+    
+        if (year < 1900 || year > currentYear) {
+            showModal('Error', 'Please enter a valid birth year.', 'images/help.jpeg');
+            return;
+        }
+        
+        const month = selectedDate.getMonth() + 1; 
         const fairyType = getFairyType(month);
 
         if (!fairyDescriptions[fairyType]) {
-            showModal('Error', 'Fairy type not found.');
+            showModal('Error', 'Fairy type not found.', 'images/help.jpeg');
             return;
         }
 
         const imageElement = document.querySelector(`.fairy-card[data-fairy="${fairyType}"] img`);
         if (!imageElement) {
-            showModal('Error', 'Fairy image not found.');
+            showModal('Error', 'Fairy image not found.', 'images/help.jpeg');
             return;
         }
 
         const imagePath = imageElement.src;
         const soundPath = soundPaths[fairyType] || '';
+        const dateRange = fairyDateRanges[fairyType];
 
         console.log(`Fairy Type: ${fairyType}, Image Path: ${imagePath}, Sound Path: ${soundPath}`);
-        showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath);
-    } else {
-        showModal('Error', 'Please enter a valid date.');
-    }
+        showModal(fairyType, fairyDescriptions[fairyType], imagePath, soundPath, dateRange);
+    });
+
+    document.querySelector('.close-button').addEventListener('click', closeModal);
+
+    document.getElementById('fairyModal').addEventListener('click', (event) => {
+        if (event.target === document.getElementById('fairyModal')) {
+            closeModal();
+        }
+    });
 });
 
 function getFairyType(month) {
@@ -81,19 +129,14 @@ function getFairyType(month) {
     return fairyTypes[month - 1];
 }
 
-function isValidDate(month, day) {
-    if (isNaN(month) || isNaN(day)) return false;
-    if (month < 1 || month > 12) return false;
-    if (day < 1 || day > 31) return false;
-    return true;
-}
-
 let currentAudio = null;
-function showModal(title, description, imagePath, soundPath = '') {
+
+function showModal(title, description, imagePath, soundPath = '', dateRange = '') {
     const modal = document.getElementById('fairyModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalDescription = document.getElementById('modalDescription');
     const modalImage = document.getElementById('modalImage');
+    const modalDateRange = document.getElementById('modalDateRange');
 
     if (!modal) {
         console.error('Modal element not found.');
@@ -102,18 +145,31 @@ function showModal(title, description, imagePath, soundPath = '') {
 
     modalTitle.textContent = title;
     modalDescription.textContent = description;
-    if (title === 'Error'){
-        modalImage.src = 'images/help.jpeg';
-    } else{ 
-    modalImage.src = imagePath;
+    
+    if (dateRange && title !== 'Error' && title !== 'How to Use') {
+        modalDateRange.textContent = dateRange;
+        modalDateRange.style.display = 'block';
+    } else {
+        modalDateRange.style.display = 'none';
     }
+    
+    if (title === 'How to Use') {
+        modalImage.src = 'images/helpf.jpeg';
+    } else if (title === 'Error') {
+        modalImage.src = 'images/help.jpeg';
+    } else { 
+        modalImage.src = imagePath;
+    }
+    
     if (soundPath) {
         if (currentAudio) {
             currentAudio.pause();
             currentAudio.currentTime = 0;
         }
         currentAudio = new Audio(soundPath);
-        currentAudio.play();
+        currentAudio.play().catch(error => {
+            console.warn('Audio playback failed:', error);
+        });
     }
 
     modal.style.display = 'flex';
@@ -121,22 +177,20 @@ function showModal(title, description, imagePath, soundPath = '') {
     modal.style.transition = 'opacity 0.3s ease';
 }
 
-// Close modal function with fade-out effect
 function closeModal() {
     const modal = document.getElementById('fairyModal');
-
     
     if (currentAudio) {
-        let fadeOut = setInterval( () => {
+        let fadeOut = setInterval(() => {
             if (currentAudio.volume > 0.1) {
                 currentAudio.volume -= 0.1;
-        } else {
-            clearInterval(fadeOut);
-        currentAudio.pause();
-        currentAudio.currentTime = 0; 
-        currentAudio = null; 
-    }
-}, 50);
+            } else {
+                clearInterval(fadeOut);
+                currentAudio.pause();
+                currentAudio.currentTime = 0; 
+                currentAudio = null; 
+            }
+        }, 50);
     }
 
     modal.style.opacity = '0';
@@ -144,10 +198,3 @@ function closeModal() {
         modal.style.display = 'none';
     }, 300);
 }
-
-document.querySelector('.close-button').addEventListener('click', closeModal);
-document.getElementById('fairyModal').addEventListener('click', (event) => {
-    if (event.target === document.getElementById('fairyModal')) {
-        closeModal();
-    }
-});
