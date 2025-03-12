@@ -198,3 +198,4 @@ function closeModal() {
         modal.style.display = 'none';
     }, 300);
 }
+
